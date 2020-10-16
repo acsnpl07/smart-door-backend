@@ -24,7 +24,7 @@ class UserController extends Controller
     public function login()
     {
         $user= User::where('email', request()->email)->first();
-        // print_r($data);
+
         if (!$user || !Hash::check(request()->password, $user->password)) {
             return response([
                     'message' => ['These credentials do not match our records.']
@@ -68,7 +68,7 @@ class UserController extends Controller
         $user = User::create([
             'name' => request()->name,
             'email' => request()->email,
-            'password' =>Hash::make(request()->email),
+            'password' =>Hash::make(request()->password),
         ]);
         $token = $user->createToken('my-app-token')->plainTextToken;
 
