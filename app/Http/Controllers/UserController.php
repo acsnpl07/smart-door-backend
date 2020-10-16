@@ -55,7 +55,8 @@ class UserController extends Controller
             'name' => ['required' , 'min:3' , 'max:100'],
             'email' =>['required' , 'email'],
             'password'         => ['required' , 'string' , 'min:8' ],
-            'password_confirm' => ['required','same:password']
+            'password_confirm' => ['required','same:password'],
+            'is_admin' => ['required','boolean']
         ]);
 
 
@@ -69,6 +70,7 @@ class UserController extends Controller
             'name' => request()->name,
             'email' => request()->email,
             'password' =>Hash::make(request()->password),
+            'is_admin' =>request()->id_admin,
         ]);
         $token = $user->createToken('my-app-token')->plainTextToken;
 
