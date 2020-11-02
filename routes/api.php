@@ -35,3 +35,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 });
 
 Route::post("login", [UserController::class,'login']);
+
+
+//raspberry pie routes
+
+Route::group(['middleware' => 'apikey'], function () {
+}

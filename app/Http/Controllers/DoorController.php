@@ -44,6 +44,8 @@ class DoorController extends Controller
             // TODO: issue the resperri by to open is, then save the state to the database
             $door->is_closed = 1;
             $door->save();
+
+
             return ["Door is now closed"];
         }
 
