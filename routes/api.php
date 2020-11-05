@@ -19,25 +19,27 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+
 Route::group(['middleware' => 'auth:sanctum'], function () {
     //All secure URL's
     Route::group(['prefix' => 'user'], function () {
-        Route::get("", [UserController::class,'index']);
-        Route::get("me", [UserController::class,'showMe']);
-        Route::post("store", [UserController::class,'store']);
+        Route::get("", [UserController::class, 'index']);
+        Route::get("me", [UserController::class, 'showMe']);
+        Route::post("store", [UserController::class, 'store']);
     });
+
     Route::group(['prefix' => 'door'], function () {
-        Route::get("", [DoorController::class,'index']);
-        Route::get("open", [DoorController::class,'open']);
-        Route::get("close", [DoorController::class,'close']);
+        Route::get("", [DoorController::class, 'index']);
+        Route::get("open", [DoorController::class, 'open']);
+        Route::get("close", [DoorController::class, 'close']);
     });
-    Route::get("log", [DoorLogController::class,'index']);
+    Route::get("log", [DoorLogController::class, 'index']);
 });
 
-Route::post("login", [UserController::class,'login']);
+Route::post("login", [UserController::class, 'login']);
 
 
 //raspberry pie routes
 
-Route::group(['middleware' => 'apikey'], function () {
-}
+// Route::group(['middleware' => 'apikey'], function () {
+// }
