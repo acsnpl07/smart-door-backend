@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\ApiKey as AppApiKey;
+use App\Models\AppApiKey;
 use Closure;
 
 class ApiKey
@@ -16,16 +16,16 @@ class ApiKey
      */
     public function handle($request, Closure $next)
     {
-        // $apiKey = $request->header('Api-Key');
-        // abort_unless($apiKey, 401, 'api key is required');
+        $apiKey = $request->header('Api-Key');
+        abort_unless($apiKey, 401, 'api key is required');
 
-        // $apiKey = AppApiKey::where('key', $apiKey)->first();
-        // abort_unless($apiKey, 401, 'invalid api key');
+        $apiKey = AppApiKey::where('key', $apiKey)->first();
+        abort_unless($apiKey, 401, 'invalid api key');
 
-        // $business = $apiKey->business;
-        // abort_unless($business, 401, 'invalid api key');
+        $door = $apiKey->door;
+        abort_unless($door, 401, 'invalid api key');
 
-        // $request->merge(['business' => $business]);
+        $request->merge(['door' => $door]);
         return $next($request);
     }
 }

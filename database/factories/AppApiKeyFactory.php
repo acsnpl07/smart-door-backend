@@ -2,17 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\DoorLog;
+use Illuminate\Support\Str;
+use App\Models\AppApiKey;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class DoorLogFactory extends Factory
+class AppApiKeyFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = DoorLog::class;
+    protected $model = AppApiKey::class;
 
     /**
      * Define the model's default state.
@@ -22,9 +23,8 @@ class DoorLogFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
-            'is_camera' => 1,
-            'entered' => 0,
+            'door_id' => 1,
+            'key' => Str::random(32)
         ];
     }
 }

@@ -41,5 +41,9 @@ Route::post("login", [UserController::class, 'login']);
 
 //raspberry pie routes
 
-// Route::group(['middleware' => 'apikey'], function () {
-// }
+Route::group(['middleware' => 'apikey'], function () {
+    Route::group(['prefix' => 'pi'], function () {
+        Route::get("log", [DoorLogController::class, 'index']);
+        Route::post("log", [DoorLogController::class, 'storeFromPi']);
+    });
+});
