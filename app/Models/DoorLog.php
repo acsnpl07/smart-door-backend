@@ -10,7 +10,7 @@ class DoorLog extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-        'picture_url',
+        'image_url',
         'entered',
         'is_camera'
     ];

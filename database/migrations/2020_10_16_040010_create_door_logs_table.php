@@ -16,7 +16,7 @@ class CreateDoorLogsTable extends Migration
         Schema::create('door_logs', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->string('picture_url')->nullable();
+            $table->string('image_url')->nullable();
             $table->boolean('entered');
             $table->boolean('is_camera');
             $table->timestamps();

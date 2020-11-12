@@ -16,3 +16,4 @@ yarn-error.log
 .idea
 .phpintel
 .DS_STORE
+*.zip

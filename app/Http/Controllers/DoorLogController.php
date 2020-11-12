@@ -10,30 +10,31 @@ class DoorLogController extends Controller
 
     public function index()
     {
-        return DoorLog::all();
+        return DoorLog::paginate(15);
     }
 
     public function storeFromPi()
     {
         request()->validate(
             [
-                'picture_url' => 'required',
+                'image_url' => 'required',
                 'entered' => ['required', 'boolean'],
 
             ]
         );
 
-        $user = User::where('picture_url', request()->picture_url)->first();
-        $data  = [
-            'picture_url' => request()->picture_url,
+        $user = User::where('image_url', request()->image_url)->first();
+        $data = [
+            'image_url' => request()->image_url,
             'name' => optional($user)->name,
-            'entered'=> request()->entered,
-            'is_camera'=> 1
+            'entered' => request()->entered,
+            'is_camera' => 1
         ];
         $doorLog = DoorLog::create($data);
 
         return response([
-            'message' => 'log has been saved'
+            'message' => 'log has been saved',
+            'data' => $doorLog
         ]);
     }
 }
