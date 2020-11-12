@@ -19,7 +19,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-
 Route::group(['middleware' => 'auth:sanctum'], function () {
     //All secure URL's
     Route::group(['prefix' => 'user'], function () {
