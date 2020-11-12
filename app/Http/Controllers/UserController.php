@@ -16,7 +16,7 @@ class UserController extends Controller
     {
         $this->validateAdmin();
 
-        $users =  User::all();
+        $users = User::all();
 
         return $users;
     }
@@ -49,7 +49,7 @@ class UserController extends Controller
         request()->validate([
             'name' => ['required', 'min:3', 'max:100'],
             'email' => ['required', 'email'],
-            'password'         => ['required', 'string', 'min:8'],
+            'password' => ['required', 'string', 'min:8'],
             'password_confirm' => ['required', 'same:password'],
             'is_admin' => ['required', 'boolean']
         ]);
@@ -83,10 +83,23 @@ class UserController extends Controller
         return request()->user();
     }
 
-
-    public function update(Request $request, User $user)
+    public function show(User $user)
     {
-        //
+        $this->validateAdmin();
+        return $user;
+    }
+
+
+    public function updateMe(User $user)
+    {
+        $this->updateUser($user);
+
+    }
+
+    public function update(User $user)
+    {
+        $this->validateAdmin();
+        $this->updateUser($user);
     }
 
 
@@ -105,5 +118,36 @@ class UserController extends Controller
         if ($authed_user['is_admin'] != 1) {
             abort(401, 'unauthorized');
         }
+    }
+
+    protected function updateUser(User $user)
+    {
+        request()->validate([
+            'name' => ['min:3'],
+            'email' => ['email'],
+            'image_url' => ['url']
+        ]);
+        $name = request()->name;
+        $email = request()->email;
+        $image_url = request()->image_url;
+
+        if ($name) {
+            $user->name = $name;
+        }
+
+        if ($email) {
+            abort_if(User::where('email', $email)->first(), 400);
+            $user->email = $email;
+        }
+
+        if ($image_url) {
+            $user->image_url = $image_url;
+        }
+        $user->save();
+
+        return response()->json([
+            'message' => 'user update successfully',
+            'data' => $user
+        ]);
     }
 }

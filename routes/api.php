@@ -25,7 +25,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => 'user'], function () {
         Route::get("", [UserController::class, 'index']);
         Route::get("me", [UserController::class, 'showMe']);
+        Route::put("me", [UserController::class, 'updateMe']);
         Route::post("store", [UserController::class, 'store']);
+        Route::put("store", [UserController::class, 'update']);
+        Route::delete("{user}", [UserController::class, 'destroy']);
+        Route::get("{user}", [UserController::class, 'show']);
     });
 
     Route::group(['prefix' => 'door'], function () {
@@ -38,9 +42,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
 Route::post("login", [UserController::class, 'login']);
 
-
 //raspberry pie routes
-
 Route::group(['middleware' => 'apikey'], function () {
     Route::group(['prefix' => 'pi'], function () {
         Route::get("log", [DoorLogController::class, 'index']);
