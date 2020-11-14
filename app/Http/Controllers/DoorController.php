@@ -48,4 +48,13 @@ class DoorController extends Controller
 
         return ['Door already closed'];
     }
+
+    public function ping()
+    {
+        $doorState = Door::first()->is_closed;
+        return response()->json([
+            'message' => 'pong',
+            'is_closed' => $doorState
+        ]);
+    }
 }

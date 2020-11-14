@@ -3,6 +3,7 @@
 use App\Http\Controllers\DoorController;
 use App\Http\Controllers\DoorLogController;
 use App\Http\Controllers\UserController;
+use App\Models\Door;
 use App\Models\DoorLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,7 @@ Route::post("login", [UserController::class, 'login']);
 Route::group(['middleware' => 'apikey'], function () {
     Route::group(['prefix' => 'pi'], function () {
         Route::get("log", [DoorLogController::class, 'index']);
+        Route::get("ping", [DoorController::class, 'index']);
         Route::post("log", [DoorLogController::class, 'storeFromPi']);
     });
 });
