@@ -29,10 +29,12 @@ class DoorController extends Controller
                 'entered' => true,
                 'is_camera' => false
             ]);
-            return ["Door is now open"];
+            return [
+                'message' => "Door is now open"
+            ];
         }
 
-        return ['Door already Open'];
+        return ['message' => 'Door already Open'];
     }
 
     public function close()
@@ -43,10 +45,10 @@ class DoorController extends Controller
             // TODO: issue the resperri by to open is, then save the state to the database
             $door->is_closed = 1;
             $door->save();
-            return ["Door is now closed"];
+            return ['message' => "Door is now closed"];
         }
 
-        return ['Door already closed'];
+        return ['message' => 'Door already closed'];
     }
 
     public function ping()

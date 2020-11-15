@@ -17,6 +17,7 @@ class DoorLogController extends Controller
     {
         request()->validate(
             [
+                'message' => 'log stored',
                 'image_url' => 'required',
                 'entered' => ['required', 'boolean'],
 
