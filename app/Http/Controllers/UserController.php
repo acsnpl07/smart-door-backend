@@ -16,7 +16,7 @@ class UserController extends Controller
     {
         $this->validateAdmin();
 
-        $users = User::all();
+        $users = User::paginate(15);
 
         return $users;
     }
@@ -108,6 +108,9 @@ class UserController extends Controller
         $this->validateAdmin();
 
         $user->delete();
+        return response()->json([
+            'message' => 'deleted'
+        ]);
     }
 
     protected function validateAdmin()
