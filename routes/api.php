@@ -48,5 +48,6 @@ Route::group(['middleware' => 'apikey'], function () {
         Route::get("log", [DoorLogController::class, 'index']);
         Route::get("ping", [DoorController::class, 'ping']);
         Route::post("log", [DoorLogController::class, 'storeFromPi']);
+        Route::get("door/close", [DoorController::class, 'close']);
     });
 });
