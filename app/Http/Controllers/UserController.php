@@ -80,7 +80,7 @@ class UserController extends Controller
 
     public function showMe()
     {
-        return request()->user();
+        return Auth::user();
     }
 
     public function show(User $user)
@@ -92,7 +92,7 @@ class UserController extends Controller
 
     public function updateMe(User $user)
     {
-        $this->updateUser($user);
+      return  $this->updateUser($user);
 
     }
 
@@ -117,7 +117,6 @@ class UserController extends Controller
     {
         $authed_user = Auth::user();
 
-
         if ($authed_user['is_admin'] != 1) {
             abort(401, 'unauthorized');
         }
@@ -140,7 +139,7 @@ class UserController extends Controller
         }
 
         if ($email) {
-            abort_if(User::where('email', $email)->first(), 400);
+            abort_if(User::where('email', $email)->first(), 400,  'Email already found');
             $user->email = $email;
         }
 
@@ -148,10 +147,11 @@ class UserController extends Controller
             $user->image_url = $image_url;
         }
         $user->save();
+//        dd($user);
 
-        return response()->json([
+        return [
             'message' => 'user update successfully',
             'data' => $user
-        ]);
+        ];
     }
 }
