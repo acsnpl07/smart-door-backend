@@ -123,8 +123,9 @@ class UserController extends Controller
         }
     }
 
-    protected function updateUser(User $user)
+    protected function updateUser()
     {
+        $user = Auth::user();
         request()->validate([
             'name' => ['min:3'],
             'email' => ['email'],
