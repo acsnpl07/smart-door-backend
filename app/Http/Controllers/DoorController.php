@@ -21,7 +21,7 @@ class DoorController extends Controller
         $authed_user = Auth::user();
         $door = Door::first();
         if ($door->is_closed == 1) {
-            // TODO: issue the resperri by to open is, then save the state to the database
+
             $door->is_closed = 0;
             $door->save();
             DoorLog::create([
@@ -42,7 +42,7 @@ class DoorController extends Controller
 
         $door = Door::first();
         if ($door->is_closed != 1) {
-            // TODO: issue the resperri by to open is, then save the state to the database
+
             $door->is_closed = 1;
             $door->save();
             return ['message' => "Door is now closed"];

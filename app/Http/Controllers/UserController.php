@@ -128,17 +128,19 @@ class UserController extends Controller
         request()->validate([
             'name' => ['min:3'],
             'email' => ['email'],
-            'image_url' => ['url']
+            'image_url' => ['url'],
+            'new_password' => ['min:6']
         ]);
         $name = request()->name;
         $email = request()->email;
         $image_url = request()->image_url;
+        $new_password = request()->new_password;
 
         if ($name) {
             $user->name = $name;
         }
 
-        if ($email) {
+        if ($email && $email != $user->email) {
             abort_if(User::where('email', $email)->first(), 400,  'Email already found');
             $user->email = $email;
         }
@@ -146,8 +148,11 @@ class UserController extends Controller
         if ($image_url) {
             $user->image_url = $image_url;
         }
+
+        if ($new_password) {
+            $user->new_password = $new_password;
+        }
         $user->save();
-//        dd($user);
 
         return [
             'message' => 'user update successfully',
