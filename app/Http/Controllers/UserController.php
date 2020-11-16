@@ -92,8 +92,7 @@ class UserController extends Controller
 
     public function updateMe(User $user)
     {
-      return  $this->updateUser($user);
-
+        return  $this->updateUser($user);
     }
 
     public function update(User $user)
@@ -126,10 +125,10 @@ class UserController extends Controller
     {
         $user = Auth::user();
         request()->validate([
-            'name' => ['min:3' , 'required'],
-            'email' => ['email' , 'required'],
-            'image_url' => ['url' , 'required'],
-            'new_password' => ['min:6' , 'required']
+            'name' => ['min:3', 'required'],
+            'email' => ['email', 'required'],
+            'image_url' => ['url', 'required'],
+            'new_password' => ['min:6', 'required']
         ]);
         $name = request()->name;
         $email = request()->email;
@@ -150,7 +149,7 @@ class UserController extends Controller
         }
 
         if ($new_password) {
-            $user->new_password = $new_password;
+            $user->password = $new_password;
         }
         $user->save();
 
