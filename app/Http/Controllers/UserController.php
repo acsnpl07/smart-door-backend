@@ -126,10 +126,10 @@ class UserController extends Controller
     {
         $user = Auth::user();
         request()->validate([
-            'name' => ['min:3'],
-            'email' => ['email'],
-            'image_url' => ['url'],
-            'new_password' => ['min:6']
+            'name' => ['min:3' , 'required'],
+            'email' => ['email' , 'required'],
+            'image_url' => ['url' , 'required'],
+            'new_password' => ['min:6' , 'required']
         ]);
         $name = request()->name;
         $email = request()->email;
