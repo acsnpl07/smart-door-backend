@@ -127,7 +127,7 @@ class UserController extends Controller
         request()->validate([
             'name' => ['min:3', 'required'],
             'email' => ['email', 'required'],
-            'image_url' => ['url', 'required'],
+            'image_url' => ['url'],
             'new_password' => ['min:6', 'required']
         ]);
         $name = request()->name;
