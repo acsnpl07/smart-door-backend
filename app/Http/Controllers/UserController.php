@@ -149,7 +149,7 @@ class UserController extends Controller
         }
 
         if ($new_password) {
-            $user->password = $new_password;
+            $user->password = Hash::make($new_password);
         }
         $user->save();
 
