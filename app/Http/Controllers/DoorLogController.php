@@ -10,7 +10,14 @@ class DoorLogController extends Controller
 
     public function index()
     {
-        return DoorLog::orderBy('created_at' , 'desc')->paginate(15);
+        if (\Auth::user()->isAdmin) {
+            return DoorLog::orderBy('created_at', 'desc')->paginate(15);
+        } else {
+            return DoorLog::
+            where('created_at', '>=', now()->subHours(72))->
+            orderBy('created_at', 'desc')->paginate();
+
+        }
     }
 
     public function storeFromPi()
