@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\DoorLog;
 use App\Models\User;
 
+
 class DoorLogController extends Controller
 {
 
     public function index()
     {
-        if (\Auth::user()->isAdmin) {
+
+        if (\Auth::user()->is_admin) {
             return DoorLog::orderBy('created_at', 'desc')->paginate(15);
         } else {
             return DoorLog::
