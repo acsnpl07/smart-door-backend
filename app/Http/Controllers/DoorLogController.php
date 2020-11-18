@@ -10,7 +10,7 @@ class DoorLogController extends Controller
 
     public function index()
     {
-        return DoorLog::paginate(15);
+        return DoorLog::orderBy('created_at' , 'desc')->paginate(15);
     }
 
     public function storeFromPi()
