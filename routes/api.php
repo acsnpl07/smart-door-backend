@@ -19,9 +19,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+// login is done using sanctum
 Route::group(['middleware' => 'auth:sanctum'], function () {
     //All secure URL's
+    //Asis
     Route::group(['prefix' => 'user'], function () {
         Route::get("", [UserController::class, 'index']);
         Route::get("me", [UserController::class, 'showMe']);
@@ -30,23 +31,27 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::delete("{user}", [UserController::class, 'destroy']);
         Route::get("{user}", [UserController::class, 'show']);
     });
-
+// binu
     Route::group(['prefix' => 'door'], function () {
         Route::get("", [DoorController::class, 'index']);
         Route::get("open", [DoorController::class, 'open']);
         Route::get("close", [DoorController::class, 'close']);
     });
+    // Asis + Ram
     Route::get("log", [DoorLogController::class, 'index']);
 });
 
+// Asis
 Route::post("login", [UserController::class, 'login']);
 
+//binu
 //raspberry pie routes
 Route::group(['middleware' => 'apikey'], function () {
     Route::group(['prefix' => 'pi'], function () {
-        Route::get("log", [DoorLogController::class, 'index']);
-        Route::get("ping", [DoorController::class, 'ping']);
+        // ram + binu
         Route::post("log", [DoorLogController::class, 'storeFromPi']);
+        // binu
+        Route::get("ping", [DoorController::class, 'ping']);
         Route::get("door/close", [DoorController::class, 'close']);
     });
 });

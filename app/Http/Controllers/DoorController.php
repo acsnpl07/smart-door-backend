@@ -1,5 +1,7 @@
 <?php
-
+/*
+ * @binu
+ * */
 namespace App\Http\Controllers;
 
 use App\Models\Door;
@@ -15,6 +17,7 @@ class DoorController extends Controller
             'is_closed' => Door::first()->is_closed
         ];
     }
+
 
     public function open()
     {

@@ -2,26 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Door;
 use App\Models\DoorLog;
 use App\Models\User;
 
 
 class DoorLogController extends Controller
 {
-
+    /*
+     * Asis +  Ram
+     *  */
     public function index()
     {
 
+//        DoorLog::where('created_at', '<', now()->subHours(72))->delete();
         if (\Auth::user()->is_admin) {
             return DoorLog::orderBy('created_at', 'desc')->paginate(15);
         } else {
+            // delete every thing else
             return DoorLog::
-            where('created_at', '>=', now()->subHours(72))->
-            orderBy('created_at', 'desc')->paginate();
-
+                    where('created_at', '>=', now()->subHours(72))->
+                    orderBy('created_at', 'desc')->paginate();
         }
     }
 
+    /*
+     * @BINU + ram
+     * */
     public function storeFromPi()
     {
         request()->validate(
