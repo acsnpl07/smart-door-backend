@@ -27,11 +27,13 @@ class DoorController extends Controller
 
             $door->is_closed = 0;
             $door->save();
+
             DoorLog::create([
                 'name' => $authed_user->name,
                 'entered' => true,
-                'is_camera' => false
+                'is_camera' => 0
             ]);
+
             return [
                 'message' => "Door is now open"
             ];

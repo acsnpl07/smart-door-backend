@@ -14,16 +14,8 @@ class DoorLogController extends Controller
      *  */
     public function index()
     {
-
-//        DoorLog::where('created_at', '<', now()->subHours(72))->delete();
-        if (\Auth::user()->is_admin) {
-            return DoorLog::orderBy('created_at', 'desc')->paginate(15);
-        } else {
-            // delete every thing else
-            return DoorLog::
-                    where('created_at', '>=', now()->subHours(72))->
-                    orderBy('created_at', 'desc')->paginate();
-        }
+        DoorLog::where('created_at', '<', now()->subHours(72))->delete();
+        return DoorLog::orderBy('created_at', 'desc')->paginate(15);
     }
 
     /*
@@ -33,14 +25,13 @@ class DoorLogController extends Controller
     {
         request()->validate(
             [
-                'message' => 'log stored',
                 'image_url' => 'required',
                 'entered' => ['required', 'boolean'],
-
             ]
         );
 
         $user = User::where('image_url', request()->image_url)->first();
+
         $data = [
             'image_url' => request()->image_url,
             'name' => optional($user)->name,
