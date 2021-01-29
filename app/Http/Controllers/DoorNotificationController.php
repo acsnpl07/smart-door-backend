@@ -14,18 +14,23 @@ class DoorNotificationController extends Controller
         abort_if(!Auth::user()->is_admin, 401, 'only admin can see  the notifications');
 
         return response()->json([
-            'data' => DoorNotification::query()->paginate(15)
+            'data' =>
+                DoorNotification::query()
+                    ->when(!app()->environment('local'), fn($q) => $q->where('door_id', 1))
+                    ->paginate(15)
         ]);
     }
+
     public function count()
     {
         abort_if(!Auth::user()->is_admin, 401, 'only admin can see  the notifications');
 
         return response()->json([
-            'notification_count' => DoorNotification::count()
+            'notification_count' => DoorNotification::
+            when(!app()->environment('local'), fn($q) => $q->where('door_id', 1))
+                ->count()
         ]);
     }
-
 
 
     public function show(DoorNotification $doorNotification)
@@ -33,8 +38,6 @@ class DoorNotificationController extends Controller
         abort_if(!Auth::user()->is_admin, 401, 'only admin can see  the notifications');
         return response()->json($doorNotification);
     }
-
-
 
 
     public function destroy(DoorNotification $doorNotification)

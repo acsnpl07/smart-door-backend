@@ -2,6 +2,7 @@
 /*
  * @binu
  * */
+
 namespace App\Http\Controllers;
 
 use App\Models\Door;
@@ -58,10 +59,14 @@ class DoorController extends Controller
 
     public function ping()
     {
-        $doorState = Door::first()->is_closed;
+
+        $door = Door::when(request()->door_id, fn($q) => $q->where('id', request()->door_id))->first();
+        $door->updated_at = now();
+        $door->save();
+
         return response()->json([
             'message' => 'pong',
-            'is_closed' => $doorState
+            'is_closed' => $door->is_closed
         ]);
     }
 }
