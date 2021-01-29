@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\DoorController;
 use App\Http\Controllers\DoorLogController;
+use App\Http\Controllers\DoorNotificationController;
 use App\Http\Controllers\UserController;
 use App\Models\Door;
 use App\Models\DoorLog;
+use App\Models\DoorNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +33,13 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::delete("{user}", [UserController::class, 'destroy']);
         Route::get("{user}", [UserController::class, 'show']);
     });
+
+    Route::group(['prefix' => 'notification'], function () {
+        Route::get("", [DoorNotificationController::class, 'index']);
+        Route::get("{doorNotification}", [DoorNotificationController::class, 'show']);
+        Route::delete("{doorNotification}", [DoorNotificationController::class, 'destroy']);
+    });
+    
 // binu
     Route::group(['prefix' => 'door'], function () {
         Route::get("", [DoorController::class, 'index']);
