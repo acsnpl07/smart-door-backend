@@ -19,6 +19,12 @@ class DoorLogController extends Controller
         return DoorLog::orderBy('created_at', 'desc')->paginate(15);
     }
 
+    public function show(DoorLog $doorLog)
+    {
+
+        return response()->json($doorLog);
+    }
+
     /*
      * @BINU + ram
      * */

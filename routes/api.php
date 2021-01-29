@@ -39,7 +39,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get("{doorNotification}", [DoorNotificationController::class, 'show']);
         Route::delete("{doorNotification}", [DoorNotificationController::class, 'destroy']);
     });
-    
+
 // binu
     Route::group(['prefix' => 'door'], function () {
         Route::get("", [DoorController::class, 'index']);
@@ -48,6 +48,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
     // Asis + Ram
     Route::get("log", [DoorLogController::class, 'index']);
+    Route::get("log/{doorLog}", [DoorLogController::class, 'show']);
 });
 
 // Asis
