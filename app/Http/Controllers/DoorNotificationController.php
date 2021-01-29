@@ -17,6 +17,14 @@ class DoorNotificationController extends Controller
             'data' => DoorNotification::query()->paginate(15)
         ]);
     }
+    public function count()
+    {
+        abort_if(!Auth::user()->is_admin, 401, 'only admin can see  the notifications');
+
+        return response()->json([
+            'notification_count' => DoorNotification::count()
+        ]);
+    }
 
 
 

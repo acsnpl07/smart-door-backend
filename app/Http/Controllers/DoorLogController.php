@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Door;
 use App\Models\DoorLog;
+use App\Models\DoorNotification;
 use App\Models\User;
 
 
@@ -27,6 +28,7 @@ class DoorLogController extends Controller
             [
                 'image_url' => 'required',
                 'entered' => ['required', 'boolean'],
+                'door_id' => ['in:1,2']
             ]
         );
 
@@ -39,7 +41,16 @@ class DoorLogController extends Controller
             'is_camera' => 1
         ];
         $doorLog = DoorLog::create($data);
-
+        // unauthorised user tried to enter and was blocked, then we should notify the admin
+        if (!$user)
+        {
+            DoorNotification::create([
+                'door_id' => request()->door_id,
+                'door_log_id' => $doorLog->id,
+                'title' => 'unauthorised login',
+                'body' => $doorLog->image_url
+            ]);
+        }
         return response([
             'message' => 'log has been saved',
             'data' => $doorLog
