@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::group(['prefix' => 'notification'], function () {
         Route::get("", [DoorNotificationController::class, 'index']);
+        Route::get("count", [DoorNotificationController::class, 'count']);
         Route::get("{doorNotification}", [DoorNotificationController::class, 'show']);
         Route::delete("{doorNotification}", [DoorNotificationController::class, 'destroy']);
     });
