@@ -3,6 +3,7 @@
 use App\Http\Controllers\DoorController;
 use App\Http\Controllers\DoorLogController;
 use App\Http\Controllers\DoorNotificationController;
+use App\Http\Controllers\LiveVideoController;
 use App\Http\Controllers\UserController;
 use App\Models\Door;
 use App\Models\DoorLog;
@@ -50,6 +51,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // Asis + Ram
     Route::get("log", [DoorLogController::class, 'index']);
     Route::get("log/{doorLog}", [DoorLogController::class, 'show']);
+    Route::get("video/image", [LiveVideoController::class, 'show']);
+
 });
 
 // Asis
