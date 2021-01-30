@@ -25,6 +25,7 @@ class DoorLogFactory extends Factory
             'name' => $this->faker->name,
             'is_camera' => 1,
             'entered' => 0,
+            'image_url' => 'https://picsum.photos/200'
         ];
     }
 }

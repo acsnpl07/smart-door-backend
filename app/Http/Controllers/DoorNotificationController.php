@@ -17,6 +17,7 @@ class DoorNotificationController extends Controller
             'data' =>
                 DoorNotification::query()
                     ->when(!app()->environment('local'), fn($q) => $q->where('door_id', 1))
+                    ->orderByDesc('created_at')
                     ->paginate(15)
         ]);
     }
