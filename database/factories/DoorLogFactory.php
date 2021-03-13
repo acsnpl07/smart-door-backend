@@ -25,7 +25,8 @@ class DoorLogFactory extends Factory
             'name' => $this->faker->name,
             'is_camera' => 1,
             'entered' => 0,
-            'image_url' => 'https://picsum.photos/200'
+            'image_url' => 'https://picsum.photos/id/' . random_int(0, 1000) . '/200',
+            'created_at' => now()->subMinutes($this->faker->randomNumber(2))
         ];
     }
 }

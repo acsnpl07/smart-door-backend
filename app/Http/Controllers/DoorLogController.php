@@ -48,7 +48,7 @@ class DoorLogController extends Controller
         ];
         $doorLog = DoorLog::create($data);
         // unauthorised user tried to enter and was blocked, then we should notify the admin
-        if (!$user)
+        if (!request()->entered)
         {
             DoorNotification::create([
                 'door_id' => request()->door_id,

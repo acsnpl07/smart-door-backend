@@ -5,6 +5,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\UpdateDoorAttributes;
 use App\Models\Door;
 use App\Models\DoorLog;
 use Illuminate\Http\Request;
@@ -15,28 +16,26 @@ class DoorController extends Controller
     public function index()
     {
         return [
-            'is_closed' => Door::first()->is_closed
+            'is_closed' => Door::first()->is_closed,
         ];
     }
-
 
     public function open()
     {
         $authed_user = Auth::user();
         $door = Door::first();
         if ($door->is_closed == 1) {
-
             $door->is_closed = 0;
             $door->save();
 
             DoorLog::create([
                 'name' => $authed_user->name,
                 'entered' => true,
-                'is_camera' => 0
+                'is_camera' => 0,
             ]);
 
             return [
-                'message' => "Door is now open"
+                'message' => "Door is now open",
             ];
         }
 
@@ -45,10 +44,8 @@ class DoorController extends Controller
 
     public function close()
     {
-
         $door = Door::first();
         if ($door->is_closed != 1) {
-
             $door->is_closed = 1;
             $door->save();
             return ['message' => "Door is now closed"];
@@ -59,14 +56,10 @@ class DoorController extends Controller
 
     public function ping()
     {
-
-        $door = Door::when(request()->door_id, fn($q) => $q->where('id', request()->door_id))->first();
-        $door->updated_at = now();
-        $door->save();
-
+        UpdateDoorAttributes::dispatchAfterResponse(request()->door, request()->ip);
         return response()->json([
             'message' => 'pong',
-            'is_closed' => $door->is_closed
+            'is_closed' => request()->door->is_closed,
         ]);
     }
 }

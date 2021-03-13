@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DoorController;
+use App\Http\Controllers\DoorIpController;
 use App\Http\Controllers\DoorLogController;
 use App\Http\Controllers\DoorNotificationController;
 use App\Http\Controllers\LiveVideoController;
@@ -52,7 +53,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get("log", [DoorLogController::class, 'index']);
     Route::get("log/{doorLog}", [DoorLogController::class, 'show']);
     Route::get("video/image", [LiveVideoController::class, 'show']);
-
+// anish
+    Route::get("video/socket-connection", DoorIpController::class);
 });
 
 // Asis
