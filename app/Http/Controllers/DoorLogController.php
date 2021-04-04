@@ -34,6 +34,8 @@ class DoorLogController extends Controller
             [
                 'image_url' => 'required',
                 'entered' => ['required', 'boolean'],
+
+
                 'door_id' => ['in:1,2']
             ]
         );
