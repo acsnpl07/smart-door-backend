@@ -53,7 +53,7 @@ class DoorLogController extends Controller
         if (!request()->entered)
         {
             DoorNotification::create([
-                'door_id' => request()->door_id,
+                'door_id' => 1,
                 'door_log_id' => $doorLog->id,
                 'title' => 'unauthorised login',
                 'body' => $doorLog->image_url
