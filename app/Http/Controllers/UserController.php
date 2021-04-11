@@ -8,10 +8,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-
 
     public function index()
     {
@@ -28,7 +28,7 @@ class UserController extends Controller
 
         if (!$user || !Hash::check(request()->password, $user->password)) {
             return response([
-                'message' => ['These credentials do not match our records.']
+                'message' => ['These credentials do not match our records.'],
             ], 404);
         }
 
@@ -36,12 +36,11 @@ class UserController extends Controller
 
         $response = [
             'user' => $user,
-            'token' => $token
+            'token' => $token,
         ];
 
         return response($response, 201);
     }
-
 
     public function store()
     {
@@ -52,14 +51,13 @@ class UserController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required', 'string', 'min:8'],
             'password_confirm' => ['required', 'same:password'],
-            'is_admin' => ['required', 'boolean']
+            'is_admin' => ['required', 'boolean'],
         ]);
-
 
         $user = User::where('email', request()->email)->first();
         if ($user) {
             return response([
-                'message' => ['user already exist.']
+                'message' => ['user already exist.'],
             ], 401);
         }
         $user = User::create([
@@ -72,12 +70,11 @@ class UserController extends Controller
 
         $response = [
             'user' => $user,
-            'token' => $token
+            'token' => $token,
         ];
 
         return response($response, 201);
     }
-
 
     public function showMe()
     {
@@ -90,10 +87,9 @@ class UserController extends Controller
         return $user;
     }
 
-
     public function updateMe(User $user)
     {
-        return  $this->updateUser($user);
+        return $this->updateUser($user);
     }
 
     public function update(User $user)
@@ -102,14 +98,13 @@ class UserController extends Controller
         $this->updateUser($user);
     }
 
-
     public function destroy(User $user)
     {
         $this->validateAdmin();
 
         $user->delete();
         return response()->json([
-            'message' => 'deleted'
+            'message' => 'deleted',
         ]);
     }
 
@@ -129,7 +124,7 @@ class UserController extends Controller
             'name' => ['min:3', 'required'],
             'email' => ['email', 'required'],
             'image_url' => ['url'],
-            'new_password' => ['min:6', 'required']
+            'new_password' => ['min:6', 'required'],
         ]);
         $name = request()->name;
         $email = request()->email;
@@ -141,11 +136,17 @@ class UserController extends Controller
         }
 
         if ($email && $email != $user->email) {
-            abort_if(User::where('email', $email)->first(), 400,  'Email already found');
+            abort_if(User::where('email', $email)->first(), 400, 'Email already found');
             $user->email = $email;
         }
 
         if ($image_url) {
+            if ($user->image_url) {
+                $urlSlpit = explode('/', $user->image_url);
+
+                $path = $urlSlpit[4] . '/' . $urlSlpit[5];
+                Storage::disk('s3')->delete($path);
+            }
             $user->image_url = $image_url;
         }
 
@@ -156,7 +157,7 @@ class UserController extends Controller
 
         return [
             'message' => 'user update successfully',
-            'data' => $user
+            'data' => $user,
         ];
     }
 }
