@@ -15,12 +15,17 @@ class CheckDoorConnectivityCommand extends Command
     public function handle()
     {
         // check both doors
-        $unConnected_doors = Door::select(['id', 'updated_at'])->where('updated_at' ,'<', now()->subMinutes(5))->get();
-        foreach ($unConnected_doors as $unConnected_door){
-            DoorNotification::create([
+        $unConnected_doors = Door::select(['id', 'updated_at'])->where('updated_at', '<', now()->subMinutes(5))->get();
+        foreach ($unConnected_doors as $unConnected_door) {
+            DoorNotification::updateOrCreate(
+                [
+                    'door_id' => $unConnected_door->id,
+                    'title' => 'door is unconnected',
+                ]
+                , [
                 'door_id' => $unConnected_door->id,
                 'title' => 'door is unconnected',
-                'body' => 'door ' . $unConnected_door->id . ' was disconnected ' . $unConnected_door->updated_at->diffForhumans()
+                'body' => 'door ' . $unConnected_door->id . ' was disconnected ' . $unConnected_door->updated_at->diffForhumans(),
             ]);
         }
     }
