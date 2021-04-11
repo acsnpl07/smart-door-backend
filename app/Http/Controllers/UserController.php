@@ -143,8 +143,8 @@ class UserController extends Controller
         if ($image_url) {
             if ($user->image_url) {
                 $urlSlpit = explode('/', $user->image_url);
-
-                $path = $urlSlpit[4] . '/' . $urlSlpit[5];
+                ray($urlSlpit);
+                $path = $urlSlpit[3] . '/' . $urlSlpit[4];
                 Storage::disk('s3')->delete($path);
             }
             $user->image_url = $image_url;
