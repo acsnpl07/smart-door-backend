@@ -17,7 +17,7 @@ class CheckDoorConnectivityCommand extends Command
     {
         Log::info('Cron Job Started');
         // check both doors
-        $unConnected_doors = Door::select(['id', 'updated_at'])->where('updated_at', '<', now()->subMinutes(1))
+        $unConnected_doors = Door::select(['id', 'updated_at'])->where('updated_at', '<', now()->subMinutes(5))
             ->where('id' , 1)
             ->get();
         foreach ($unConnected_doors as $unConnected_door) {
