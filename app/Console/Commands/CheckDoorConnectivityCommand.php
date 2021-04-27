@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Door;
 use App\Models\DoorNotification;
 use Illuminate\Console\Command;
+use Log;
 
 class CheckDoorConnectivityCommand extends Command
 {
@@ -14,8 +15,11 @@ class CheckDoorConnectivityCommand extends Command
 
     public function handle()
     {
+        Log::info('Cron Job Started');
         // check both doors
-        $unConnected_doors = Door::select(['id', 'updated_at'])->where('updated_at', '<', now()->subMinutes(1))->get();
+        $unConnected_doors = Door::select(['id', 'updated_at'])->where('updated_at', '<', now()->subMinutes(1))
+            ->where('id' , 1)
+            ->get();
         foreach ($unConnected_doors as $unConnected_door) {
             DoorNotification::updateOrCreate(
                 [
