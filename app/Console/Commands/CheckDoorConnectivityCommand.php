@@ -29,7 +29,7 @@ class CheckDoorConnectivityCommand extends Command
                 , [
                 'door_id' => $unConnected_door->id,
                 'title' => 'door is unconnected',
-                'body' => 'door ' . $unConnected_door->id . ' was disconnected ' . $unConnected_door->updated_at->(null, false, false, 3),
+                'body' => 'door ' . $unConnected_door->id . ' was disconnected ' . $unConnected_door->updated_at->diffForHumans(null, false, false, 3),
                 'created_at' => now(),
             ]);
         }
