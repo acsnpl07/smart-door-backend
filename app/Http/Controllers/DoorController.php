@@ -56,8 +56,8 @@ class DoorController extends Controller
 
     public function ping()
     {
-        $clientIP = \Request::ip();
-        UpdateDoorAttributes::dispatchAfterResponse(request()->door, $clientIP);
+
+        UpdateDoorAttributes::dispatchAfterResponse(request()->door, "");
         return response()->json([
             'message' => 'pong',
             'is_closed' => request()->door->is_closed,

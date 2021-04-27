@@ -32,10 +32,6 @@ class UpdateDoorAttributes implements ShouldQueue
 	{
 		$this->door->updated_at = now();
 		$this->door->save();
-        $doorIp = DoorIp::firstOrNew(
-            ['id' =>  1],
-            ['ip' => $this->ip, 'port' => "8540"]
-        );
-        $doorIp->save();
+
 	}
 }
